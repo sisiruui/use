@@ -1,0 +1,71 @@
+1、安装webpack
+      1.全局安装webpack：npm install webpack -g 或者转化了cnpm则将npm改为cnpm进行安装
+       2.进行初始化建立package.json文件记录插件，命令行：npm init
+       3.webpack安装到项目并将写入package.json的devDependencies中，命令行：npm install webpack --save-dev。
+2、webpack配置文件介绍
+      1.webpack需要配置文件webpack.config.js，手动的创建于项目根目录中就ok。一个项目可以设置多个配置文件，每个都可以有不同的功能。
+      2.webpack的配置文件，格式如下：
+　　　　module.exports = {
+　　　　　　//配置开始。主体
+　　　　}
+　　3.常用配置项简单说明
+　　　　entry:打包的入口文件，它可以是一个字符串或者一个对象。
+　　　　output:配置打包的输出结果，为一个对象。
+　　　　　　     fileName：定义输出文件名，为一个字符串。
+　　　　　　     path：定义输出文件路径，为一个字符串。
+　　　　module:定义对模块的处理逻辑，为一个对象。
+　　　　　　     loaders：定义一系列的加载器，为一个数组。
+　　　　　　　　[
+　　　　　　　　　　{
+　　　　　　　　　　　　test:正则表达式，用于匹配到的文件
+　　　　　　　　　　　　loader/loaders：字符串或者数组，处理匹配到的文件。　　　　　　　　　　　　　　　
+                                          //loader：string：只需要用到一个模块加载器
+                                          //loaders：array：要使用多个模块加载器
+　　　　　　　　　　　　include:字符串或者数组，指包含的文件夹
+　　　　　　　　　　　　exclude：字符串或者数组，指排除的文件夹
+　　　　　　　　　　}
+　　　　　　　　]　　　　resolve:影响对模块的解析，为一个对象
+　　　　　　extensions：自动补全识别后缀，为一个数组
+　　　　plugins:定义插件，为一个数组
+
+　　4.entry的详细说明
+　　　　1）当entry是一个字符串时，这个字符串表示需要打包的模块的路径,如果只有一个要打包的模块，可以使用这种形式
+　　　　2）当entry是一个对象
+　　　　　　a.是数组时,如果需要将多个模块打包成一个模块，可以使用这个方式。如果这些模块之间不存在依赖，数组中值的顺序没有要求，如果存在依赖，则要将依赖性最高的模块放在最后面。
+　　　　　　例如：entry:["./dome/one.js",".dome/two.js"]　　　　　　b.是键值对形式的对象是，当需要分别打包成多个模块时，可以使用这种方式，例:
+　　　　　　entry:{
+　　　　　　　　module1:"./dome/one.js",
+　　　　　　　　module2:["./dome/two.js","./dome/three.js"]　　　　　　}
+　　　　注:当entry是一个键值对形式的对象时，包名就是键名，output的filename不能是一个固定的值，因为每个包的名字不能一样
+　　5.output详细说明
+　　　　1）output是一个对象
+　　　　2）output.filename:指定输出文件名，一个字符串。当输出一个文件，output.filename为一个确定的字符串
+　　　　　　如：output:{
+　　　　　　　　　　filename:"build.js"
+　　　　　　　　　　　　}
+　　　　　　当输出多个文件，output.filename不能为一个确定的字符串。为了让每个文件有一个唯一的名字，需要用到下面
+　　　　　　的变量
+　　　　　　如：output:{
+　　　　　　　　　　path:'./build/',
+　　　　　　　　　　fialname:'[name]_bundle.js'
+　　　　　　　　}
+　　　　　　（3）output.path:指定输出文件的路径，相对路径，为一个字符串
+　　6.module.loaders详细说明
+　　　　1）module是一个对象，定义对模块的处理逻辑
+　　　　2）module.loaders是一个数组，定义一系列加载器，这个数组中的每一项都是一个对象
+　　　　3）module.loaders:[
+　　　　　　　　{
+　　　　　　　　　　test:正则表达式，用于匹配到的文件
+　　　　　　　　　　loader/loaders：字符串或者数组，处理匹配到的文件。　　　　　　　　　　　　　　　
+                                   //loader：string：只需要用到一个模块加载器
+                                   //loaders：array：要使用多个模块加载器
+　　　　　　　　　　include:字符串或者数组，指包含的文件夹
+　　　　　　　　　　exclude：字符串或者数组，指排除的文件夹
+　　　　　　　　}
+　　　　　　]　　　　（4）module除了可以配置loaders以外还能配置其他的值.更详细请移步webpack官网
+
+　　7.resolve.extensions详细说明
+　　　　1）resolve.extensions并不是必须配置的，当不配置时，会使用默认值["", ".webpack.js", ".web.js", ".js"]，当手动为resolve.extensions设置值，它的默认值会被覆盖
+　　　　2）如果你想要每个模块都能够按照它们自己扩展名正确的被解析，要在数组中添加一个空字符串。
+　　　　3）如果你想请求一个js文件但是在请求时不带扩展（如：require('somecode')）,那么就需要将'.js'添加到数组中。其他文件一样
+编制：Vue.js研发群165862199

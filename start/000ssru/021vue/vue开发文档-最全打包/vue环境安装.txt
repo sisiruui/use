@@ -1,0 +1,26 @@
+第一步
+安装node (下载地址http://nodejs.cn/ 选择v6.2.0)
+
+第二步
+安装vue-cli
+执行：npm install --global vue-cli --registry=https://registry.npm.taobao.org
+
+安装之后 在你的node安装目录下出现 node_global文件夹
+
+第三步 安装环境
+在path里面 加上下面这一句话
+如果你安装的是在C盘
+；C:\Program Files\nodejs\node_global
+(注意加分号；)
+
+第四步
+执行 vue init webpack my-project
+（这个也不一定非得执行webpack的 你也可以执行vue init browserify-simple my-project，看项目本身而言）
+
+第五步 安装依赖
+执行 npm install --registry=https://registry.npm.taobao.org
+
+第六步 
+执行 npm run dev
+
+编制：Vue.js研发群165862199
